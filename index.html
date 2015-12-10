@@ -28,7 +28,7 @@ TODO: Add notes about what was done on a pomodoro
 
             <div class="row">
                 <!-- <div class="col-lg-4 col-md-4 col-sm-1 col-xs-1"></div> -->
-                <div class="col-lg-6 col-md-6 col-sm-10 col-xs-10 jumbotron">
+                <div class="col-lg-4 col-md-4 col-sm-10 col-xs-10 jumbotron">
                     <div class="well well-sm">
                         <form class="simple-form form-inline">
                             <h3>番茄呼叫土豆</h3>
@@ -43,15 +43,52 @@ TODO: Add notes about what was done on a pomodoro
                         </button>
                     </p>
                 </div>
-                <div class="col-lg6 col-md-6 col-sm-1 col-xs-1 jumbotron">
-                    <div class="well well-sm">
-                        <form class="simple-form form-inline">
-                            <h3>番茄番茄，我是土豆</h3>
-                            <input type="text" class="form-control" ng-model="pomodoro.description" id="activityDesc" placeholder="Ex: Finishing the layout of feature X." required >
-                        </form>
+                <div class="col-lg8 col-md-8 col-sm-10 col-xs-1" ng-controller="PotatoCtrl">
+                    <div class="todos">
+            			<h2>我的任务列表</h2>
+            			<form ng-submit="addTodo()">
+            				<input type="text" class="input-xxlarge" ng-model="todoText"  size="30" placeholder="添加新任务" ng-required="true">
+            				<label ng-show="hasItem()">
+            					<input type="checkbox" ng-model="isDoneAll" ng-click="doneAll()">标记所有为已解决
+            				</label>
+            			</form>
+            			<div ng-show="hasItem()">
+            				<div class="btn-toolbar">
+            					<div class="btn-group">
+            						<a href="" class="btn btn-mini" ng-click="predicate='text'; reverse=!reverse">内容</a>
+            						<a href="" class="btn btn-mini" ng-click="predicate='time'; reverse=!reverse">时间</a>
+            						<a href="" class="btn btn-mini" ng-click="predicate='weight'; reverse=!reverse">权重</a>
+            						<a href="" class="btn btn-mini" ng-click="predicate=''">默认</a>
+            					</div>
+            					<div class="btn-group">
+            						<a href="" class="btn btn-mini" ng-click="query=true">已完成</a>
+            						<a href="" class="btn btn-mini" ng-click="query=false">未完成</a>
+            						<a href="" class="btn btn-mini" ng-click="query=''">全部</a>
+            					</div>
+            				</div>
+            			</div>
+            			<div class="todo-list">
+            				<div ng-repeat="todo in todos | orderBy:predicate:reverse | filter:query">
+            					<ul class="unstyled color" ng-hide="todo.editing">
+            						<li ng-repeat="color in [4,3,2,1]" class="color-{{color}}" ng-click="todo.weight=color"></li>
+            					</ul>
+            					<div class="alert color-{{todo.weight}} done-{{todo.done}}" ng-hide="todo.editing" ng-dblclick="startEditing(todo)">
+            						<button type="button" class="close" ng-click="removeTodo(todo)" data-dismiss="alert">×</button>
+            						<input type="checkbox" ng-model="todo.done">
+            						<span class="todo-text">{{todo.text}}</span>
+            						<p class="pull-right">{{todo.time}}</p>
+            					</div>
+            					<form ng-submit="doneEditing(todo)" ng-show="todo.editing">
+            						<input type="text" ng-blur="doneEditing(todo)" ng-focus="todo==editedItem" class="input-xxlarge" ng-model="todo.text" size="30" ng-required="true">
+            					</form>
+            				</div>
+            			</div>
+            			<div class="footer" ng-show="!query && hasItem()">
+            				<span class="badge badge-warning">{{count()}}</span> 项未完成
+            			</div>
                     </div>
                 </div>
-            </div>
+            </div> <!-- end of row-->
 
             <div class="row">
                 <div class="col-lg-2 col-md-2 col-sm-1 col-xs-1"></div>
@@ -84,8 +121,9 @@ TODO: Add notes about what was done on a pomodoro
     <script src="bower_components/angular/angular.min.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
-    <script src="js/app.js"></script>
-    <script src="js/controllers.js"></script>
-    <script src="js/services.js"></script>
-    <script src="js/filters.js"></script>
+    <script src="js/app.js" type="text/javascript"></script>
+    <script src="js/controllers.js" type="text/javascript"></script>
+    <script src="js/services.js" type="text/javascript"></script>
+    <script src="js/filters.js" type="text/javascript"></script>
+    <script src="js/directives.js" type="text/javascript"></script>
 </html>
