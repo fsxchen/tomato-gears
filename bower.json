@@ -1,0 +1,24 @@
+{
+  "name": "tomato-gears",
+  "authors": [
+    "fsxchen <fsxchen@gmail.com>"
+  ],
+  "description": "tomato list",
+  "main": "",
+  "moduleType": [],
+  "keywords": [
+    "tomato"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "angularjs#~1.4.8"
+  }
+}
