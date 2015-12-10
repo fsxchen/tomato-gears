@@ -11,47 +11,31 @@ TODO: Add notes about what was done on a pomodoro
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="A single HTML file pomodoro timer">
         <meta name="author" content="Pedro Howat <https://github.com/phowat/tomato-gears>">
-        <title>Tomato Gears</title>
+        <title>番茄番茄个土豆</title>
 
         <!-- Bootstrap core CSS -->
         <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
-        <style type="text/css">
-            body {
-                text-align: center;
-                padding-top: 10px;
-            }
-            p.small-label {
-                font-size: 0.8em;
-                margin-bottom: 0;
-            }
-            h1.timer {
-                margin-top: 0;
-            }
-        </style>
+        <link rel="stylesheet" href="css/main.css">
     </head>
 
     <body>
-    <audio id="alert-audio" src="ringtone.wav" preload="auto"></audio>
+    <audio id="alert-audio" src="media/ringtone.wav" preload="auto"></audio>
     <a href="https://github.com/phowat/tomato-gears">
         <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub">
     </a>
-    <div class="container" ng-controller="PomodoroTimerCtrl" ng-init="init()">
+    <div class="container">
+        <div ng-controller="PomodoroTimerCtrl" ng-init="init()">
+
             <div class="row">
-                <div class="col-lg-3 col-md-3 col-sm-1 col-xs-1"></div>
-                <div class="col-lg-6 col-md-6 col-sm-10 col-xs-10">
+                <!-- <div class="col-lg-4 col-md-4 col-sm-1 col-xs-1"></div> -->
+                <div class="col-lg-6 col-md-6 col-sm-10 col-xs-10 jumbotron">
                     <div class="well well-sm">
                         <form class="simple-form form-inline">
-                            <h3>Activity</h3>
+                            <h3>番茄呼叫土豆</h3>
                             <input type="text" class="form-control" ng-model="pomodoro.description" id="activityDesc" placeholder="Ex: Finishing the layout of feature X." required >
                         </form>
                     </div>
-                </div>
-                <div class="col-lg-3 col-md-3 col-sm-1 col-xs-1"></div>
-            </div>
-            <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-1 col-xs-1"></div>
-                <div class="col-lg-4 col-md-4 col-sm-10 col-xs-10 jumbotron">
-                    <!-- <p class="small-label"> {{ pomodoro.text }} </p> -->
+                    <p class="small-label"> {{ pomodoro.text }} </p>
                     <h1 class="timer"> {{ stopwatch.data.value | secToTime }} </h1>
                     <p class="lead">
                         <button type="button" class="btn btn-primary" ng-click="startAbort()">
@@ -59,17 +43,25 @@ TODO: Add notes about what was done on a pomodoro
                         </button>
                     </p>
                 </div>
-                <div class="col-lg-4 col-md-4 col-sm-1 col-xs-1"></div>
+                <div class="col-lg6 col-md-6 col-sm-1 col-xs-1 jumbotron">
+                    <div class="well well-sm">
+                        <form class="simple-form form-inline">
+                            <h3>番茄番茄，我是土豆</h3>
+                            <input type="text" class="form-control" ng-model="pomodoro.description" id="activityDesc" placeholder="Ex: Finishing the layout of feature X." required >
+                        </form>
+                    </div>
+                </div>
             </div>
+
             <div class="row">
                 <div class="col-lg-2 col-md-2 col-sm-1 col-xs-1"></div>
                 <div class="col-lg-8 col-md-8 col-sm-10 col-xs-10">
                     <table class="table table-bordered table-striped table-hover">
                         <thead>
                         <tr>
-                            <th>Start Time</th>
-                            <th>Description</th>
-                            <th>Status</th>
+                            <th>开始时间</th>
+                            <th>描述</th>
+                            <th>状态</th>
                         </tr>
                         </thead>
                         <tbody ng-repeat="p in pomodoro.pomodoros">
@@ -85,12 +77,15 @@ TODO: Add notes about what was done on a pomodoro
                 <a href="{{ pomodoro.pomodoros | toCSV }}" id="export-activty">Export</a> <br/>
                 <a href="#" id="reset-pomodoros" ng-click="resetPomodoros()">Reset Pomodoros</a>
             </div>
-        </div><!-- /.container -->
+        </div>
+    </div><!-- /.container -->
     </body>
     <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="bower_components/angular/angular.min.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
-    <script src="js/index.js">
-    </script>
+    <script src="js/app.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/services.js"></script>
+    <script src="js/filters.js"></script>
 </html>

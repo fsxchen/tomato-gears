@@ -1,0 +1,11 @@
+body {
+    text-align: center;
+    padding-top: 10px;
+}
+p.small-label {
+    font-size: 0.8em;
+    margin-bottom: 0;
+}
+h1.timer {
+    margin-top: 0;
+}
