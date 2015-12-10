@@ -6,13 +6,14 @@ var tomatoGears = angular.module('tomatoGears', []);
 tomatoGears.factory('PomodoroData', function () {
     return {
         action: '',
-        label: 'Start Pomodoro',
+        label: '番茄一下吧',
         text: '',
+        // startTS: 0,
         startTS: 0,
         description: '',
-        pomodoroDuration: 1500,
-        shortBreakDuration: 300,
-        longBreakDuration: 1200,
+        pomodoroDuration: 1500,             //25 * 60 min
+        shortBreakDuration: 300,            //5 * 60
+        longBreakDuration: 1200,            //20 * 60
         pomodoros: [],
         pcount: 0
     };
@@ -21,7 +22,7 @@ tomatoGears.factory('PomodoroData', function () {
 tomatoGears.factory('Timer', function($timeout, PomodoroData) {
 
     var data = {
-            value: 0
+            value: 0.5*60
         },
         stopwatch = null;
 
@@ -46,11 +47,15 @@ tomatoGears.factory('Timer', function($timeout, PomodoroData) {
     };
 
     var decideDuration = function() {
+        
         if (PomodoroData.action === 'POMODORO') {
+            return 5;
             return PomodoroData.pomodoroDuration;
         } else if (PomodoroData.action === 'SHORT_BREAK') {
+            return 1;
             return PomodoroData.shortBreakDuration;
         } else { //LONG_BREAK
+            return 3;
             return PomodoroData.longBreakDuration;
         }
     };
@@ -58,6 +63,7 @@ tomatoGears.factory('Timer', function($timeout, PomodoroData) {
     var finish = function () {
         if (PomodoroData.action === 'POMODORO') {
             PomodoroData.pomodoros[PomodoroData.pomodoros.length-1].status = "FINISHED";
+            PomodoroData.pomodoros[PomodoroData.pomodoros.length-1].endTS =  new Date();
             PomodoroData.text = '';
             localStorage['pomodoros'] = JSON.stringify(PomodoroData.pomodoros);
             PomodoroData.pcount++;
@@ -70,7 +76,7 @@ tomatoGears.factory('Timer', function($timeout, PomodoroData) {
                 body: "Nice job! Now go get some well earned rest."
             });
         } else {
-            PomodoroData.label = 'Start Pomodoro';
+            PomodoroData.label = '番茄一下吧';
             new Notification("Break Finished", {
                 body: "Break finished, back to work you slacker!"
             });
@@ -80,9 +86,9 @@ tomatoGears.factory('Timer', function($timeout, PomodoroData) {
     var timerLoop = function () {
         stopwatch = $timeout(function() {
             var duration = decideDuration();
-            data.value = Math.round(new Date().getTime() / 1000) - PomodoroData.startTS;
-
-            if (data.value > duration) {
+            // data.value = Math.round(new Date().getTime() / 1000) - PomodoroData.startTS;
+            data.value = duration - Math.round(new Date().getTime() / 1000) + PomodoroData.startTS
+            if (data.value < 0) {
                 finish();
             } else {
                 timerLoop();
